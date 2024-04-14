@@ -46,6 +46,7 @@ func main() {
 
 func compileHandler(w http.ResponseWriter, r *http.Request) {
 	var req CompileRequest
+	defer r.Body.Close() // Close the request body at the end of the handler
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Failed to parse JSON request body", http.StatusBadRequest)
 		return
